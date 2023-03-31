@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:sliver_app/diary.dart';
+import 'package:sliver_app/sliver.dart';
 
 import 'ad.dart';
 
@@ -28,7 +28,12 @@ class HomePage extends StatelessWidget {
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            snap: true, // 튕기듯이 나오는 효과.
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherPage(),));
+                }, icon: Icon(Icons.account_box_rounded)),
+            snap: true,
+            // 튕기듯이 나오는 효과.
             floating: true,
             title: Text("SliverAppbar"),
             pinned: false,
@@ -67,7 +72,7 @@ class HomePage extends StatelessWidget {
             SliverFixedExtentList(
               itemExtent: 100,
               delegate: SliverChildBuilderDelegate(
-                    (context, index) {
+                (context, index) {
                   if (index % 4 == 0 && index != 0) {
                     return Ad((index / 4).toInt());
                   } else {
@@ -88,7 +93,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
 
   CustomScrollView buildCustomScrollView() {
     return CustomScrollView(
@@ -122,17 +126,17 @@ class HomePage extends StatelessWidget {
 
   SliverFixedExtentList _buildSliverFixedExtentList() {
     return SliverFixedExtentList(
-            itemExtent: 100, // 아이템들의 높이를 쌩까고 얘가 정함
-            delegate: SliverChildBuilderDelegate(
-              //계산이 필요하면 무조건 Builder 사용해야함
-              childCount: 50,
-              (context, index) {
-                if (index % 5 == 0 && index != 0) {
-                  return Ad((index / 5).toInt());
-                } else
-                  return Diary(index);
-              },
-            ));
+        itemExtent: 100, // 아이템들의 높이를 쌩까고 얘가 정함
+        delegate: SliverChildBuilderDelegate(
+          //계산이 필요하면 무조건 Builder 사용해야함
+          childCount: 50,
+          (context, index) {
+            if (index % 5 == 0 && index != 0) {
+              return Ad((index / 5).toInt());
+            } else
+              return Diary(index);
+          },
+        ));
   }
 
   SliverList buildSliverList() {
